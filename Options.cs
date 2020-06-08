@@ -16,7 +16,7 @@ namespace JwtTokenGenerator
         [Option('e', "expires", Required = false, Default = 5, HelpText = "Token expiry. Use TimeUnit to set the unit. Default is 5 seconds.")]
         public double Expires { get; set; }
 
-        [Option('t', "timeunit", Required = false, Default=TimeUnit.Seconds, HelpText = "Token expiry time unit")]
+        [Option('t', "timeunit", Required = false, Default=TimeUnit.Seconds, HelpText = "Token expiry time unit. Seconds, Minutes, Hours, Days")]
         public TimeUnit TimeUnit {get;set;}
 
         public void Validate()
