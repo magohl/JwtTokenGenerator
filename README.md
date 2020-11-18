@@ -1,5 +1,5 @@
 # JwtTokenGenerator
-A simple JWT token generator
+A simple .net core based commandline JWT token generator.
 
 ```
 JwtTokenGenerator 1.0.0
