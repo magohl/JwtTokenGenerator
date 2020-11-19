@@ -4,7 +4,7 @@ namespace JwtTokenGenerator
 {
     public class Options
     {
-        [Option('k', "key", Required = true, HelpText = "Ascii key use to generate the symmetric security key. [HS256 which means ")]
+        [Option('k', "key", Required = true, HelpText = "Ascii key use to generate the symmetric security key. [Minimum 16 chars]")]
         public string Key { get; set; }
 
         [Option('i', "issuer", Required = false, HelpText = "Issuer")]

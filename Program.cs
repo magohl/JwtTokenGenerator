@@ -18,7 +18,7 @@ namespace JwtTokenGenerator
                             {
                                 opts.Validate();
                                 string tokenRaw = GetToken(options: opts);
-                                Console.WriteLine($"JWT key generated:\n{tokenRaw}");
+                                Console.WriteLine($"SHA256 JWT key generated: {tokenRaw}");
                                 return 0;
                             },
                             errors => 1);
