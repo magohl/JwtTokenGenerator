@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using CommandLine;
 using Microsoft.IdentityModel.Tokens;
@@ -11,23 +13,23 @@ namespace JwtTokenGenerator
         static int Main(string[] args)
         {
             try
-                {
-                    return Parser.Default.ParseArguments<Options>(args)
-                        .MapResult(
-                            (Options opts) =>
-                            {
-                                opts.Validate();
-                                string tokenRaw = GetToken(options: opts);
-                                Console.WriteLine($"SHA256 JWT key generated: {tokenRaw}");
-                                return 0;
-                            },
-                            errors => 1);
-                }
-                catch (ArgumentValidationException e)
-                {
-                    Console.WriteLine("Invalid arguments detected: {0}", e.Message);
-                    return 1;
-                }          
+            {
+                return Parser.Default.ParseArguments<Options>(args)
+                    .MapResult(
+                        (Options opts) =>
+                        {
+                            opts.Validate();
+                            string tokenRaw = GetToken(options: opts);
+                            Console.WriteLine($"SHA256 JWT key generated: {tokenRaw}");
+                            return 0;
+                        },
+                        errors => 1);
+            }
+            catch (ArgumentValidationException e)
+            {
+                Console.WriteLine("Invalid arguments detected: {0}", e.Message);
+                return 1;
+            }          
         }
 
         private static string GetToken(Options options)
@@ -37,7 +39,10 @@ namespace JwtTokenGenerator
             var tokenDescriptor = new SecurityTokenDescriptor();
             var key = Encoding.ASCII.GetBytes(options.Key);
 
-            tokenDescriptor.SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
+            tokenDescriptor.SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), options.SecurityAlgorithm);
+
+            if (options.Subject != null)
+                tokenDescriptor.Subject =  new System.Security.Claims.ClaimsIdentity(new List<Claim>{new Claim("sub", options.Subject)});
 
             if (options.Issuer != null)
                 tokenDescriptor.Issuer = options.Issuer;

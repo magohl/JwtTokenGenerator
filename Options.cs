@@ -1,4 +1,5 @@
 ﻿using CommandLine;
+using Microsoft.IdentityModel.Tokens;
 
 namespace JwtTokenGenerator
 {
@@ -13,11 +14,19 @@ namespace JwtTokenGenerator
         [Option('a', "audience", Required = false, HelpText = "Audience")]
         public string Audience { get; set; }
 
+        [Option('s', "subject", Required = false, HelpText = "Subject")]
+        public string Subject { get; set; }
+
         [Option('e', "expires", Required = false, Default = 5, HelpText = "Token expiry. Use TimeUnit to set the unit. Default is 5 seconds.")]
         public double Expires { get; set; }
 
         [Option('t', "timeunit", Required = false, Default=TimeUnit.Seconds, HelpText = "Token expiry time unit. Seconds, Minutes, Hours, Days")]
         public TimeUnit TimeUnit {get;set;}
+
+        [Option('g', "algorithm", Required = false, Default=SecurityAlgorithms.HmacSha256, HelpText = "SecurityAlgorithm. Eg. HS256, HS512 etc.")]
+        public string SecurityAlgorithm {get;set;}
+
+       
 
         public void Validate()
         {
