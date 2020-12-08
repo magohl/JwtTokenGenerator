@@ -14,7 +14,8 @@ namespace JwtTokenGenerator
         {
             try
             {
-                return Parser.Default.ParseArguments<Options>(args)
+                var parser = new Parser(s=>s.CaseInsensitiveEnumValues=true);
+                return parser.ParseArguments<Options>(args)
                     .MapResult(
                         (Options opts) =>
                         {
