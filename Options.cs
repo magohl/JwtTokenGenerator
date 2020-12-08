@@ -26,14 +26,13 @@ namespace JwtTokenGenerator
         [Option('g', "algorithm", Required = false, Default=SecurityAlgorithms.HmacSha256, HelpText = "SecurityAlgorithm. Eg. HS256, HS512 etc.")]
         public string SecurityAlgorithm {get;set;}
 
-       
-
         public void Validate()
         {
-            if (Key.Length<16)
-            {
-                throw new ArgumentValidationException($"Key must be at least 16 characters long!");
-            }
+            //A better validator is needed as we now allow different algorithms
+            // if (Key.Length<16)
+            // {
+            //     throw new ArgumentValidationException($"Key must be at least 16 characters long!");
+            // }
         }
     }
 }
